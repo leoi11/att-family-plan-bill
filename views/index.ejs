@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ATT Bill</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css">
+  </head>
+  <body>
+    <div class="ui hidden divider"></div>
+    <div class="ui container">
+      <h1 class="ui center aligned header">
+        AT&T Family Plan Bill
+        <div class="sub header">
+          Last updated at: <%- bill.updatedAt %>
+        </div>
+      </h1>
+      <div class="ui grid">
+        <div class="center aligned column">
+          <a href="/update" class="ui icon labeled button"><i class="refresh icon"></i>Update</a>
+        </div>
+      </div>
+      <h3 class="ui center aligned header">
+        Plan Breakdown
+      </h3>
+      <table class="ui celled table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (var title in bill.plan) { var amount = bill.plan[title] %>
+            <% if (title !== 'total') { %>
+              <tr>
+                <td><%- TITLES[title] %></td>
+                <td>$<%- amount.toFixed(2) %></td>
+              </tr>
+            <% } %>
+          <% } %>
+          <tr class="positive">
+            <td><b>Total:</b></td>
+            <td><b>$<%- bill.plan.total.toFixed(2) %></b></td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 class="ui center aligned header">
+        Surcharges:
+      </h3>
+      <table class="ui celled table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (var title in bill.surcharges)  { var amount = bill.surcharges[title]; %>
+            <% if (title !== 'total') { %>
+              <tr>
+                <td><%- TITLES[title] %></td>
+                <td>$<%- amount.toFixed(2) %></td>
+              </tr>
+            <% } %>
+          <% } %>
+          <tr class="positive">
+            <td><b>Total</b></td>
+            <td><b>$<%- bill.surcharges.total.toFixed(2) %></b></td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 class="ui center aligned header">
+        Overage:
+      </h3>
+      <table class="ui celled table">
+        <thead>
+          <tr>
+            <th>Line</th>
+            <th>Portion</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Total</b></td>
+            <td><b>100%</b></td>
+            <td><b>$<%- bill.overage.amount %></b></td>
+          </tr>
+          <% for (var number in bill.overage.lines) { var overage = bill.overage.lines[number]; %>
+            <tr class="negative">
+              <td><%- number %></td>
+              <td><%- (overage / bill.overage.total * 100).toFixed(2)%>% (<%- overage %>GB)</td>
+              <td>$<%- bill.lines[number].overage.toFixed(2) %></td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+      <h3 class="ui center aligned header">
+        Lines Breakdown
+      </h3>
+      <table class="ui celled structured table">
+        <thead>
+          <tr>
+            <th>Number</th>
+            <th>Item</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (var number in bill.lines) { var detail = bill.lines[number]; var first = true; %>
+            <% for (var title in detail) { var amount = detail[title] %>
+              <% if (title !== 'total') { %>
+                <tr>
+                  <% if (first) { %>
+                  <td rowspan="<%- Object.keys(detail).length %>"><%- number %></td>
+                  <% } %>
+                  <td><%- TITLES[title] %></td>
+                  <td>$<%- amount.toFixed(2) %></td>
+                </tr>
+                <% first = false; %>
+              <% } %>
+            <% } %>
+            <tr class="positive">
+              <td><b>Total</b></td>
+              <td><b>$<%-detail.total.toFixed(2) %></b></td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+      <h3 class="ui center aligned header">
+        Total: $<%- bill.total.toFixed(2) %>
+      </h3>
+    </div>
+  </body>
+</html>

@@ -4,6 +4,8 @@ var page = webpage.create();
 var loading = false;
 var loadJQ = false;
 
+var config = require('./config');
+
 page.onLoadStarted = function() {
   loading = true;
   loadJQ = true;
@@ -25,7 +27,7 @@ var steps = [
     page.evaluate(function(user, password){
       $('form#ssoLoginForm input#userid').val(user);
       $('form#ssoLoginForm input#userPassword').val(password);
-    }, 'familyplanyeah', 'wearefamily14');
+    }, config.user, config.password);
   },
   function() {
     page.evaluate(function() {
@@ -41,7 +43,7 @@ var steps = [
     } else {
       page.evaluate(function(passcode) {
         $('form input#passcode0').val(passcode);
-      }, '25643');
+      }, config.passcode);
     }
   },
   function() {

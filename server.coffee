@@ -36,34 +36,6 @@ bill = {}
 
 app.use cors()
 
-app.post '/bill', (req, res, next) ->
-  tmpBill =
-    plan: {}
-    surcharges: {}
-    updatedAt: moment().format('MM/DD/YY HH:mm:ss')
-    lineCount: 0
-    lines: {}
-    overage: 0
-  for number, detail of req.body
-    tmpBill.lineCount += 1
-    tmpBill.lines[number] = {}
-    for title, amount of detail
-      if title in ['surcharges', 'government', '30gb', 'national']
-        tmpBill.plan[title] ||= 0
-        tmpBill.plan[title] += amount
-      else if title in ['data']
-        tmpBill.overage += amount
-      else if title in ['']
-      else
-        tmpBill.lines[number][title] = amount
-  tmpBill.plan.total = _.sum _.values(tmpBill.plan)
-  for number, line of tmpBill.lines
-    line.shared = tmpBill.plan.total / tmpBill.lineCount
-    line.total = _.sum _.values(line)
-
-  bill = tmpBill
-  res.status(200).end()
-
 app.get '/', (req, res, next) ->
   try
     content = fs.readFileSync './data.json', 'utf8'

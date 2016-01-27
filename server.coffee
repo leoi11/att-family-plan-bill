@@ -126,6 +126,10 @@ app.get '/data', (req, res, next) ->
   catch e
     res.send {status: 'not ready'}
 
+app.post '/data', (req, res, next) ->
+  fs.writeFileSync './data.json', JSON.stringify(req.body, null, 2)
+  res.status(200).end()
+
 
 app.get '/update', (req, res, next) ->
   try

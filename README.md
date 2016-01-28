@@ -29,30 +29,33 @@ Scrape and calculate line charges of an AT&amp;T family plan
 
 ## Scraping
 1. Run 
-```shell
-phantomjs phatom.js
-```
+
+    ```shell
+    phantomjs phatom.js
+    ```
+
 2. data.json will be output in the follwing format
-```json
-{
-  "lines": {
-    "line-1": {
-      "charge-item-1": 12,
-      "charge-item-2": 34,
-      ...
-    },
-    "line-2": {
-      ...
-    },
-    ...
-  },
-  "usages": {
-    "line-1": 1.3,
-    "line-2": 4.3,
-    ...
-  }
-}
-```
+ 
+    ```json
+    {
+      "lines": {
+        "line-1": {
+          "charge-item-1": 12,
+          "charge-item-2": 34,
+          ...
+        },
+        "line-2": {
+          ...
+        },
+        ...
+      },
+      "usages": {
+        "line-1": 1.3,
+        "line-2": 4.3,
+        ...
+      }
+    }
+    ```
 
 ## Running the server
 1. Run 

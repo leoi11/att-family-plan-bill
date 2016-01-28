@@ -2,7 +2,6 @@ _ = require 'lodash'
 bodyParser = require 'body-parser'
 express = require 'express'
 moment = require 'moment'
-cors = require 'cors'
 engine = require 'ejs-locals'
 cp = require 'child_process'
 fs = require 'fs'
@@ -33,8 +32,6 @@ app.locals.TITLES =
 
 
 bill = {}
-
-app.use cors()
 
 app.get '/', (req, res, next) ->
   try

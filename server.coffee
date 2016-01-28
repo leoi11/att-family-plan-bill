@@ -124,7 +124,7 @@ app.get '/update', (req, res, next) ->
   cp.exec 'phantomjs phantom.js', (err) ->
     throw err if err
     console.log "Finish scraping"
-  # Redirect for a loading page
+  # Redirect to the loading page
   res.redirect '/'
 
 

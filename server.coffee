@@ -34,6 +34,8 @@ app.locals.TITLES =
 
 bill = {}
 
+updatedAt = null
+
 app.get '/', (req, res, next) ->
   try
     content = fs.readFileSync './data.json', 'utf8'
@@ -45,7 +47,7 @@ app.get '/', (req, res, next) ->
   bill =
     plan: {}
     surcharges: {}
-    updatedAt: moment().format('MM/DD/YY HH:mm:ss')
+    updatedAt: updatedAt
     lineCount: 0
     lines: {}
     overage: {amount: 0, total: 0, lines: {}}
@@ -110,6 +112,7 @@ app.get '/data', (req, res, next) ->
     res.send {status: 'not ready'}
 
 app.post '/data', (req, res, next) ->
+  updatedAt = moment().format('MM-DD-YYYY')
   fs.writeFileSync './data.json', JSON.stringify(req.body, null, 2)
   res.status(200).end()
 
@@ -126,8 +129,6 @@ app.get '/update', (req, res, next) ->
     console.log "Finish scraping"
   # Redirect to the loading page
   res.redirect '/'
-
-
 
 app.listen 3500, ->
   console.log "Listening on port 3500"

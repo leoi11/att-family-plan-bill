@@ -83,7 +83,7 @@ var steps = [
         // Srapge until it cannot find the line number div
         while (numberTitle) {
           // Scrape the line number
-          number = (ref = numberTitle.find('a')) != null ? (ref1 = ref.text()) != null ? (ref2 = ref1.match(/(WENGCHEONG SIN )([0-9\-]+)/)) != null ? ref2[2] : void 0 : void 0 : void 0;
+          number = (ref = numberTitle.find('a')) != null ? (ref1 = ref.text()) != null ? (ref2 = ref1.match(/([A-Z -]+)([0-9\-]+)/)) != null ? ref2[2] : void 0 : void 0 : void 0;
           if (!number) {
             break;
           }

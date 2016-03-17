@@ -89,7 +89,7 @@
           <% for (var number in bill.overage.lines) { var overage = bill.overage.lines[number]; %>
             <tr class="negative">
               <td><%- number %></td>
-              <td><%- (overage / bill.overage.total * 100).toFixed(2)%>% (<%- overage %>GB)</td>
+              <td><%- (overage / bill.overage.total * 100).toFixed(2)%>% (<%- overage.toFixed(2) %>GB)</td>
               <td>$<%- bill.lines[number].overage.toFixed(2) %></td>
             </tr>
           <% } %>

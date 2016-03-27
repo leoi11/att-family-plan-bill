@@ -67,7 +67,7 @@ var steps = [
   function() {
     // Hack to wait for report
     var result = page.evaluate(function() {
-      return $(".bPOD-bill-title.PadBot3imp.MarTop10:nth(1)");
+      return $(".bPOD-bill-title.PadBot3imp.MarTop10:nth-child(1)");
     });
     if (!result) {
       index--;
@@ -79,7 +79,7 @@ var steps = [
         // Regex for matching item title
         SUBTITLE_REGEX = /(Monthly|Surcharges|Government|Data|Equipment|International|Smartphone|iPhone|30GB|National|Access)/;
         // Div containing the line number
-        numberTitle = $('.bPOD-bill-title.PadBot3imp.MarTop10:nth(1)').next();
+        numberTitle = $('.bPOD-bill-title.PadBot3imp.MarTop10:nth-child(1)').next();
         // Srapge until it cannot find the line number div
         while (numberTitle) {
           // Scrape the line number
@@ -97,8 +97,8 @@ var steps = [
               // Go into details of monthly charges
               return $(elem).next().find('.botDotBorder, .BotSolidBorder').each(function(index, elem) {
                 var ref4;
-                title = (ref4 = $(elem).find('.accRow:nth(0)').text().match(SUBTITLE_REGEX)) != null ? ref4[1].toLowerCase() : void 0;
-                return bill[number][title] = parseFloat($(elem).find('.accRow:nth(1)').text().replace(/( |\$|\n|\t)/g, '').replace(/−/g, '-'));
+                title = (ref4 = $(elem).find('.accRow:nth-child(0)').text().match(SUBTITLE_REGEX)) != null ? ref4[1].toLowerCase() : void 0;
+                return bill[number][title] = parseFloat($(elem).find('.accRow:nth-child(1)').text().replace(/( |\$|\n|\t)/g, '').replace(/−/g, '-'));
               });
             } else {
               // Otherwise just save the amount with title
@@ -130,8 +130,8 @@ var steps = [
         usages = {};
         $('#usageTableToggleId tbody tr').each(function(index, elem) {
           var number, usage;
-          number = $(elem).find('td:nth(0) span').text().replace(/(\n| |\t)/g, '').replace(/\./g, '-');
-          usage = parseFloat($(elem).find('td:nth(1) a span strong').text());
+          number = $(elem).find('td:nth-child(0) span').text().replace(/(\n| |\t)/g, '').replace(/\./g, '-');
+          usage = parseFloat($(elem).find('td:nth-child(1) a span strong').text());
           return usages[number] = usage;
         });
         return usages;
